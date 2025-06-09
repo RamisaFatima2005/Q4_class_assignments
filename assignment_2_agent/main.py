@@ -35,7 +35,7 @@ agent = Agent(
 @cl.on_chat_start
 async def handle_chat_start():
     cl.user_session.set("history", [])
-    await cl.Message(content="Welcome to the AI assistant by Ramisa Fatima! How can I assist you today?").send()
+    await cl.Message(content="Welcome to the AI assistant! How can I assist you today?").send()
 
 @cl.on_message
 async def handle_massage(message: cl.Message):
