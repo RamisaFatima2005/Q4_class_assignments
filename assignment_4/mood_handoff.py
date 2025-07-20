@@ -3,7 +3,6 @@ from agents import Agent, Runner, RunConfig, AsyncOpenAI, OpenAIChatCompletionsM
 import os
 from dotenv import load_dotenv, find_dotenv
 
-# ─── ❶ Setup ─────────────────────────────
 load_dotenv(find_dotenv())
 gemini_api_key = os.getenv("GEMINI_API_KEY")
 
@@ -23,7 +22,6 @@ run_config = RunConfig(
     tracing_disabled=True,
 )
 
-# ─── ❷ Single Agent for Mood Detection ──
 mood_detector = Agent(
     name="Mood Detector",
     instructions=(
@@ -34,7 +32,6 @@ mood_detector = Agent(
     ),
 )
 
-# ─── ❸ Mood-to-Activity Mapping ─────────
 mood_suggestions = {
     "sad": "Take a moment to write down three things you're truly grateful for. It can help shift your focus toward the positive.",
     "stressed": "Try the 4-7-8 deep breathing technique: Inhale for 4 seconds, hold for 7, and exhale for 8. Repeat a few times to relax.",
@@ -46,7 +43,6 @@ mood_suggestions = {
     "tired": " Close your eyes, breathe deeply, and rest for 5 minutes. A quick reset works wonders."
 }
 
-# ─── ❹ User Input + Agent Run ───────────
 user_message = input("How are you feeling today? ➜ ")
 
 mood_result = Runner.run_sync(
@@ -58,7 +54,6 @@ mood_result = Runner.run_sync(
 mood = mood_result.final_output.lower().strip()
 print(f"\nMood detected → {mood}")
 
-# ─── ❺ Show Suggestion if Mood is Matched ─
 if mood in mood_suggestions:
     print("Suggested activity:", mood_suggestions[mood])
 else:
