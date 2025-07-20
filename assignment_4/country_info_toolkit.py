@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 load_dotenv()
 set_tracing_disabled(disabled=True)
 
-# Set up Gemini Client
 gemini_api_key = os.getenv("GEMINI_API_KEY")
 
 external_client = AsyncOpenAI(
