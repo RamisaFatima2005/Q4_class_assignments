@@ -1,4 +1,3 @@
-# mood_handoff.py
 from agents import Agent, Runner, RunConfig, AsyncOpenAI, OpenAIChatCompletionsModel
 import os
 from dotenv import load_dotenv, find_dotenv
