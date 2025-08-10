@@ -16,13 +16,10 @@ from dotenv import load_dotenv
 import os
 import asyncio
 
-# Load environment variables from .env file
 load_dotenv()
 
-# Set the gemini key
 gemini_api_key = os.getenv("GEMINI_API_KEY")
 
-# Initialize OpenAI client
 external_client = AsyncOpenAI(
     api_key=gemini_api_key,
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
@@ -36,7 +33,6 @@ model = OpenAIChatCompletionsModel(
 config = RunConfig(model=model, model_provider=external_client, tracing_disabled=True)
 
 
-# ---------------- Context ----------------
 class UserContext(BaseModel):
     name: str
     is_premium_user: bool
@@ -47,7 +43,6 @@ class OffensiveOutput(BaseModel):
     contains_offensive: bool
 
 
-# ---------------- Tools ----------------
 @function_tool
 async def refund(ctx: RunContextWrapper) -> str:
     user_name = ctx.context.name
@@ -149,7 +144,6 @@ When the query is **general**:
 
 
 
-# ---------------- guardrail Agent ---------------------
 guardrail_agent = Agent(
     name="Guardrail Agent",
     instructions="""
@@ -161,7 +155,6 @@ If you find one, return contains_offensive: True, otherwise return contains_offe
 )
 
 
-# ---------------- Guardrails ----------------
 @output_guardrail
 async def NoOffensiveLanguageGuardrail(
     ctx: RunContextWrapper[None], agent: Agent, input: str | list[TResponseInputItem]
@@ -201,7 +194,6 @@ If the query is **out of scope** (e.g., unrelated topics), simply respond with:
 
 
 
-# ---------------- CLI Runner ----------------
 async def main():
     print("\nWelcome to the Support Agent System")
     name = input("Enter your name: ")
